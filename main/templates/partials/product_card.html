@@ -1,0 +1,11 @@
+<div class="col-lg-4 mb-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ name }}</h5>
+            <a href="{% url 'category_details' category_slug=categorySlug %}/{{ slug }}"
+               class="btn btn-primary">
+                Přejít k produktu
+            </a>
+        </div>
+    </div>
+</div>

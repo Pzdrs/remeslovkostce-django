@@ -22,6 +22,8 @@ def category_details(request, category_slug):
     return render(request, 'category.html', {'catalog': True, 'category': category, 'products': products})
 
 
+# Django be forcing me to have the category_slug argument there, but it's unused, not sure if there is a way to
+# get rid of it
 def product_details(request, category_slug, product_slug):
     product = Product.objects.get(slug=product_slug)
     return render(request, 'product_details.html', {'catalog': True, 'product': product})

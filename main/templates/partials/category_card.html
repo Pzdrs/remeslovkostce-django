@@ -1,0 +1,28 @@
+<div class="col-lg-4 mb-3">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h5 class="card-title">{{ name }}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <img class="img-thumbnail"
+                         src="{{ thumbnail }}"
+                         alt="{{ name }}">
+                </div>
+                <div class="col-6">
+                    <p class="card-text">{{ description }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a href="{% url 'catalog' %}{{ slug }}" class="btn btn-primary mt-3">
+                        Přejít k produktům
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
