@@ -4,9 +4,16 @@ from . import models
 
 # Register your models here.
 
-class MainAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'description')
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'description', 'thumbnail')
     prepopulated_fields = {'slug': ('name',)}
 
 
-admin.site.register(models.ProductCategory, MainAdmin)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'category', 'image')
+    prepopulated_fields = {'slug': ('name',)}
+    list_filter = ('category', 'image')
+
+
+admin.site.register(models.ProductCategory, ProductCategoryAdmin)
+admin.site.register(models.Product, ProductAdmin)

@@ -11,3 +11,15 @@ class ProductCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Product(models.Model):
+    category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='images/products', default='not-found.jpg')
+
+    def __str__(self):
+        return self.name
+
+

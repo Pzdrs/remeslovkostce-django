@@ -1,5 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}{{ category.name }}{% endblock %}
 {% block body %}
-
+    <div class="row mt-5">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <h5>{{ category.name }}</h5>
+            <hr>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-lg-4 mb-3">
+                        <div class="card">
+                            <div class="card-body"><h5 class="card-title">{{ product.name }}</h5><a
+                                    href="{% url 'category_details' category_slug=category.slug %}/{{ product.slug }}" class="btn btn-primary">Přejít k produktu</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
 {% endblock %}
