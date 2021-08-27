@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from .models import ProductCategory, Product
 
 
@@ -17,6 +19,9 @@ def catalog(request):
 
 
 def category_details(request, category_slug):
-    category = ProductCategory.objects.get(slug=category_slug)
-    products = Product.objects.filter(category_id=category.id)
-    return render(request, 'category.html', {'catalog': True, 'category': category, 'products': products})
+    try:
+        category = ProductCategory.objects.get(slug=category_slug)
+        products = Product.objects.filter(category_id=category.id)
+        return render(request, 'category.html', {'catalog': True, 'category': category, 'products': products})
+    except ObjectDoesNotExist as e:
+        return render(request, 'error.html', {'message': 'Tento produkt neexistuje'})

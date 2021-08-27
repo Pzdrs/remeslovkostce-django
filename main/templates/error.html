@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Vyskytla se chyba{% endblock %}
+{% block body %}
+    <div class="row mt-5">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 text-center my-5">
+            <h3>{{ message }}</h3>
+            <hr>
+            <img src="{% static 'error.png' %}" alt="error icon">
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}
