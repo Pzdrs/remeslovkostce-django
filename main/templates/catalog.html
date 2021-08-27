@@ -6,7 +6,7 @@
         <div class="col-lg-8">
             <h5>Katalog</h5>
             <hr>
-            <div class="row">
+            <div class="row mb-5">
                 {% for category in categories %}
                     {% include 'partials/category_card.html' with name=category.name slug=category.slug thumbnail=category.thumbnail.url description=category.description %}
                 {% endfor %}

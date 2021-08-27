@@ -8,9 +8,9 @@
         <div class="col-lg-8">
             <h5>{{ category.name }}</h5>
             <hr>
-            <div class="row">
+            <div class="row mb-5">
                 {% for product in products %}
-                    {% include 'partials/product_card.html' with name=product.name slug=product.slug categorySlug=category.slug %}
+                    {% include 'partials/product_card.html' with name=product.name slug=product.slug categorySlug=category.slug image=product.image.url %}
                 {% endfor %}
             </div>
         </div>

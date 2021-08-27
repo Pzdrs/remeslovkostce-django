@@ -1,11 +1,8 @@
 <div class="col-lg-4 mb-3">
     <div class="card">
+        <img class="card-img-top" src="{{ image }}" alt="{{ slug }}">
         <div class="card-body">
-            <h5 class="card-title">{{ name }}</h5>
-            <a href="{% url 'category_details' category_slug=categorySlug %}/{{ slug }}"
-               class="btn btn-primary">
-                Přejít k produktu
-            </a>
+            <h5 class="card-title text-center">{{ name }}</h5>
         </div>
     </div>
 </div>
