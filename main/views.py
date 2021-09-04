@@ -1,27 +1,40 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import TemplateView
+
 from .models import ProductCategory, Product
 
 
 # Create your views here.
 
-def index(request):
-    return render(request, 'index.html', {'index': True})
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        return {'index': True}
 
 
-def contact(request):
-    return render(request, 'contact.html', {'contact': True})
+class ContactView(TemplateView):
+    template_name = 'contact.html'
+
+    def get_context_data(self, **kwargs):
+        return {'contact': True}
 
 
-def catalog(request):
-    return render(request, 'catalog.html', {'catalog': True, 'categories': ProductCategory.objects.all()})
+class CatalogView(TemplateView):
+    template_name = 'catalog.html'
+
+    def get_context_data(self, **kwargs):
+        return {'catalog': True, 'categories': ProductCategory.objects.all()}
 
 
-def category_details(request, category_slug):
-    try:
-        category = ProductCategory.objects.get(slug=category_slug)
-        products = Product.objects.filter(category_id=category.id)
-        return render(request, 'category.html', {'catalog': True, 'category': category, 'products': products})
-    except ObjectDoesNotExist as e:
-        return render(request, 'error.html', {'message': 'Tento produkt neexistuje'})
+class CategoryDetailsView(TemplateView):
+    template_name = 'category.html'
+
+    def get_context_data(self, **kwargs):
+        try:
+            category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
+            products = Product.objects.filter(category_id=category.id)
+            return {'catalog': True, 'category': category, 'products': products}
+        except ObjectDoesNotExist:
+            self.template_name = 'error.html'
+            return {'catalog': True, 'message': 'Tento produkt neexistuje'}
