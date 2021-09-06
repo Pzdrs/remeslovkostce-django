@@ -22,10 +22,8 @@ class ContactView(TemplateView):
 
 class CatalogListView(ListView):
     template_name = 'catalog.html'
+    model = ProductCategory
     context_object_name = 'categories'
-
-    def get_queryset(self):
-        return ProductCategory.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
@@ -33,14 +31,26 @@ class CatalogListView(ListView):
         return context
 
 
-class CategoryDetailsView(TemplateView):
+class CategoryDetailsView(ListView):
     template_name = 'category.html'
+    context_object_name = 'products'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.error_message = None
+        self.category = None
+
+    def get_queryset(self):
+        try:
+            self.category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
+            return Product.objects.filter(category_id=self.category.id)
+        except ObjectDoesNotExist:
+            self.error_message = 'Tento produkt neexistuje'
+            self.template_name = 'error.html'
 
     def get_context_data(self, **kwargs):
-        try:
-            category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
-            products = Product.objects.filter(category_id=category.id)
-            return {'catalog': True, 'category': category, 'products': products}
-        except ObjectDoesNotExist:
-            self.template_name = 'error.html'
-            return {'catalog': True, 'message': 'Tento produkt neexistuje'}
+        context = super().get_context_data(**kwargs)
+        context['catalog'] = True
+        context['category'] = self.category
+        context['message'] = self.error_message
+        return context
