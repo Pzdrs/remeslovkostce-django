@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from .models import ProductCategory, Product
 
@@ -20,11 +20,17 @@ class ContactView(TemplateView):
         return {'contact': True}
 
 
-class CatalogView(TemplateView):
+class CatalogListView(ListView):
     template_name = 'catalog.html'
+    context_object_name = 'categories'
 
-    def get_context_data(self, **kwargs):
-        return {'catalog': True, 'categories': ProductCategory.objects.all()}
+    def get_queryset(self):
+        return ProductCategory.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['catalog'] = True
+        return context
 
 
 class CategoryDetailsView(TemplateView):
