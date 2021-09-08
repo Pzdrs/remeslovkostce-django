@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ category.name }}
+    {% if error_message %}
+        Někde se vyskytla chyba
+    {% else %}
+        {{ category.name }}
+    {% endif %}
 {% endblock %}
 {% block body %}
     <div class="row mt-5">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
-            <h5>{{ category.name }}</h5>
+            <h5>
+                {% if error_message %}
+                    Tento produkt neexistuje
+                {% else %}
+                    {{ category.name }}
+                {% endif %}
+            </h5>
             <hr>
             <div class="row mb-5">
                 {% for product in products %}
