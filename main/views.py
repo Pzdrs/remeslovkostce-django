@@ -31,7 +31,7 @@ class CatalogListView(ListView):
         return context
 
 
-class CategoryDetailsView(ListView):
+class CategoryProductsView(ListView):
     template_name = 'category.html'
     context_object_name = 'products'
 

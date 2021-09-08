@@ -7,5 +7,5 @@ urlpatterns = [
                   path('', views.IndexView.as_view(), name='index'),
                   path('kontakt/', views.ContactView.as_view(), name='contact'),
                   path('katalog/', views.CatalogListView.as_view(), name='catalog'),
-                  path('katalog/<slug:category_slug>', views.CategoryDetailsView.as_view(), name='category_details'),
+                  path('katalog/<slug:category_slug>', views.CategoryProductsView.as_view(), name='category_details'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
