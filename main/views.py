@@ -1,4 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView, ListView
 
 from .models import ProductCategory, Product
@@ -35,7 +34,7 @@ class CategoryProductsView(ListView):
         try:
             self.category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
             return Product.objects.filter(category_id=self.category.id)
-        except ObjectDoesNotExist:
+        except ProductCategory.DoesNotExist:
             self.error_message = 'Tento produkt neexistuje'
 
     def get_context_data(self, **kwargs):

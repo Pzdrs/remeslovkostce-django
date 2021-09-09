@@ -14,13 +14,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto pl-4">
                 <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link {% if index %}active{% endif %}">Domů</a>
+                    <a href="{% url 'main:index' %}" class="nav-link {% if index %}active{% endif %}">Domů</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'catalog' %}" class="nav-link {% if catalog %}active{% endif %}">Katalog</a>
+                    <a href="{% url 'main:catalog' %}" class="nav-link {% if catalog %}active{% endif %}">Katalog</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'contact' %}" class="nav-link {% if contact %}active{% endif %}">Kontakty</a>
+                    <a href="{% url 'main:contact' %}" class="nav-link {% if contact %}active{% endif %}">Kontakty</a>
                 </li>
             </ul>
         </div>
