@@ -12,7 +12,7 @@
         <div class="col-lg-8">
             <h5>
                 {% if error_message %}
-                    Tento produkt neexistuje
+                    {{ error_message }}
                 {% else %}
                     {{ category.name }}
                 {% endif %}
@@ -20,7 +20,7 @@
             <hr>
             <div class="row mb-5">
                 {% for product in products %}
-                    {% include 'partials/product_card.html' with name=product.name slug=product.slug categorySlug=category.slug image=product.image.url %}
+                    {% include 'partials/product_card.html' %}
                 {% endfor %}
             </div>
         </div>

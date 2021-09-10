@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% if error_message %}
+        Někde se vyskytla chyba
+    {% else %}
+        {{ product.name }}
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <div class="row mt-5">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <h5>
+                {% if error_message %}
+                    {{ error_message }}
+                {% else %}
+                    {{ product.name }}
+                {% endif %}
+            </h5>
+            <hr>
+            <div class="row mb-5">
+                {% if not error_message %}
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="{{ product.image.url }}" alt="{{ product.slug }}" class="img-fluid">
+                        </div>
+                        <div class="col-6">
+                            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi architecto
+                                asperiores culpa, debitis eius est hic, magnam minus quod rerum soluta ullam veritatis.
+                                A
+                                aperiam consectetur in odit vel.
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}
