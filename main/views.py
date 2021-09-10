@@ -16,8 +16,8 @@ class ContactView(TemplateView):
 
 
 class CatalogListView(ListView):
-    template_name = 'catalog.html'
     model = ProductCategory
+    template_name = 'catalog.html'
     context_object_name = 'categories'
     extra_context = {'catalog': True}
 
