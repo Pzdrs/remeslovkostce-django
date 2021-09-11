@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import *
 
-from .models import ProductCategory, Product
+from .models import ProductCategory, Product, ProductReview
 from .forms import ProductReviewForm
 
 
@@ -54,6 +54,7 @@ class ProductDetailView(DetailView, BaseCreateView):
     form_class = ProductReviewForm
 
     category = None
+    reviews = None
     error_message = None
 
     def get_success_url(self):
@@ -62,14 +63,22 @@ class ProductDetailView(DetailView, BaseCreateView):
     def get_object(self, queryset=None):
         try:
             self.category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
-            return Product.objects.get(slug=self.kwargs[self.slug_url_kwarg])
+            product = Product.objects.get(slug=self.kwargs[self.slug_url_kwarg])
+            self.reviews = ProductReview.objects.filter(product=product.pk)
+            return product
         except Product.DoesNotExist:
             self.error_message = 'Tento produkt neexistuje'
         except ProductCategory.DoesNotExist:
             self.error_message = 'Tato kategorie produktů neexistuje'
 
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['product'] = self.get_object().pk
+        return initial
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['error_message'] = self.error_message
         context['category'] = self.category
+        context['reviews'] = self.reviews
         return context

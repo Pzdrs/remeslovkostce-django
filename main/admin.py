@@ -15,6 +15,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'image')
 
 
+class ProductReviewAdmin(admin.ModelAdmin):
+    readonly_fields = ('published',)
+
+
 admin.site.register(models.ProductCategory, ProductCategoryAdmin)
 admin.site.register(models.Product, ProductAdmin)
-admin.site.register(models.ProductReview)
+admin.site.register(models.ProductReview, ProductReviewAdmin)
