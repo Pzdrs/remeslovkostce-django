@@ -46,7 +46,7 @@ class CategoryProductsView(ListView):
         return context
 
 
-class ProductDetailView(DetailView, ModelFormMixin):
+class ProductDetailView(DetailView, BaseCreateView):
     template_name = 'product_details.html'
     context_object_name = 'product'
     slug_url_kwarg = 'product_slug'
@@ -55,6 +55,9 @@ class ProductDetailView(DetailView, ModelFormMixin):
 
     category = None
     error_message = None
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()
 
     def get_object(self, queryset=None):
         try:

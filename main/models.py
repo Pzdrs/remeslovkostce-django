@@ -2,8 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
 # Create your models here.
+from django.utils import timezone
+
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
@@ -22,6 +23,10 @@ class ProductReview(models.Model):
     published = models.DateField()
     rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     content = models.TextField()
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.published = timezone.now()
+        return super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return str(self.rating)
