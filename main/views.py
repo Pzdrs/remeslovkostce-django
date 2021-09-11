@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic.edit import *
 
 from .models import ProductCategory, Product
+from .forms import ProductReviewForm
 
 
 # Create your views here.
@@ -44,11 +46,12 @@ class CategoryProductsView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, ModelFormMixin):
     template_name = 'product_details.html'
     context_object_name = 'product'
     slug_url_kwarg = 'product_slug'
     extra_context = {'catalog': True}
+    form_class = ProductReviewForm
 
     category = None
     error_message = None
@@ -56,7 +59,7 @@ class ProductDetailView(DetailView):
     def get_object(self, queryset=None):
         try:
             self.category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
-            return Product.objects.get(slug=self.kwargs['product_slug'])
+            return Product.objects.get(slug=self.kwargs[self.slug_url_kwarg])
         except Product.DoesNotExist:
             self.error_message = 'Tento produkt neexistuje'
         except ProductCategory.DoesNotExist:

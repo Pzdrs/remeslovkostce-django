@@ -26,6 +26,12 @@
                                     A
                                     aperiam consectetur in odit vel.
                                 </div>
+                                <hr>
+                                <form action="">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="submit">
+                                </form>
                             </div>
                         </div>
                     {% endif %}

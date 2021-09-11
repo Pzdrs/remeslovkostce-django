@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -17,12 +18,21 @@ class ProductCategory(models.Model):
         return reverse('main:category_details', args=(self.slug,))
 
 
+class ProductReview(models.Model):
+    published = models.DateField()
+    rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    content = models.TextField()
+
+    def __str__(self):
+        return str(self.rating)
+
+
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='images/products', default='not-found.jpg')
-    stars = models.IntegerField(default=0)
+    reviews = models.ManyToManyField(ProductReview)
 
     def __str__(self):
         return self.name
