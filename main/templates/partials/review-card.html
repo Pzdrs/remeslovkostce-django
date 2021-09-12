@@ -7,17 +7,19 @@
                 <p class="text-secondary text-center">{{ review.published }}</p>
             </div>
             <div class="col-md-10">
-                <p>
-                <p>
-                    <strong>Anonymní uživatel</strong>
-                    <span class="float-end">{{ review.rating }}/100</span>
-                </p>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-
-                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-3">
+                        <p><strong>Anonymní uživatel</strong></p>
+                    </div>
+                    <div class="col-9">
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ review.rating }}%;"
+                                 aria-valuenow="{{ review.rating }}"
+                                 aria-valuemin="0" aria-valuemax="100">{{ review.rating }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <p>{{ review.content }}</p>
             </div>
         </div>
