@@ -10,19 +10,21 @@
     <div class="row mt-5">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
-            <h4>
-                {% if error_message %}
-                    {{ error_message }}
-                {% else %}
+            {% if not error_message %}
+                <h4>
                     {{ category.name }}
-                {% endif %}
-            </h4>
-            <hr>
-            <div class="row mb-5">
-                {% for product in products %}
-                    {% include 'partials/product_card.html' %}
-                {% endfor %}
-            </div>
+                </h4>
+                <hr>
+                <div class="row mb-5">
+                    {% for product in products %}
+                        {% include 'partials/product_card.html' %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-danger text-center mt-3" role="alert">
+                    {{ error_message }}
+                </div>
+            {% endif %}
         </div>
         <div class="col-lg-2"></div>
     </div>
