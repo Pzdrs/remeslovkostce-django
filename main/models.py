@@ -9,7 +9,7 @@ from django.utils import timezone
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     thumbnail = models.ImageField(upload_to='images', default='not-found.jpg')
 
     def __str__(self):
@@ -22,6 +22,7 @@ class ProductCategory(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='images/products', default='not-found.jpg')
 

@@ -10,13 +10,13 @@
     <div class="row mt-5">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
-            <h5>
+            <h4>
                 {% if error_message %}
                     {{ error_message }}
                 {% else %}
                     {{ category.name }}
                 {% endif %}
-            </h5>
+            </h4>
             <hr>
             <div class="row mb-5">
                 {% for product in products %}
