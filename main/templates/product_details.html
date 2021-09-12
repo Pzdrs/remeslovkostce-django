@@ -26,9 +26,11 @@
                                 <h5>Přidat recenzi</h5>
                                 <hr>
                                 <form method="post">
-                                    {% csrf_token %}
-                                    {{ form.as_p }}
-                                    <input type="submit">
+                                    <div class="form-group">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <input type="submit" class="btn btn-outline-primary">
+                                    </div>
                                 </form>
                             </div>
                         </div>
