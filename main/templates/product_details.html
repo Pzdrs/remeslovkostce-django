@@ -9,7 +9,8 @@
 {% block body %}
     <div class="row mt-5">
         <div class="col-lg-2">
-            <a href="{{ product.category.get_absolute_url }}" class="btn btn-outline-info float-end">Zpět na {{ product.category }}</a>
+            <a href="{{ product.category.get_absolute_url }}" class="btn btn-outline-info float-end">Zpět
+                na {{ product.category }}</a>
         </div>
         <div class="col-lg-8">
             {% if not error_message %}
@@ -35,7 +36,7 @@
                         <div class="row">
                             <div class="col-12 mt-4">
                                 <div class="d-flex justify-content-between">
-                                    <h5>Recenze</h5>
+                                    <h5>Recenze <span class="text-muted">({{ reviews.count }})</span></h5>
                                     <a href="{% url 'main:product_details' product.category.slug product.slug %}review"
                                        class="float-end btn btn-outline-primary">Přidat recenzi</a>
                                 </div>
