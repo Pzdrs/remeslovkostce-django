@@ -43,4 +43,4 @@ class ProductReview(models.Model):
         return str(self.rating)
 
     def get_absolute_url(self):
-        return self.product.get_absolute_url()
+        return f'{self.product.get_absolute_url()}#{self.pk}'
