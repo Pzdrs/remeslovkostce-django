@@ -83,3 +83,11 @@ class ProductDetailView(DetailView, BaseCreateView):
         context['category'] = self.category
         context['reviews'] = self.reviews
         return context
+
+
+class CreateProductReviewView(CreateView):
+    template_name = 'create_product_review.html'
+    model = ProductReview
+    form_class = ProductReviewForm
+
+
