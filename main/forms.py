@@ -9,7 +9,8 @@ class ProductReviewForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             'product': forms.HiddenInput,
-            'rating': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Hodnocení produktu'}),
+            'rating': forms.NumberInput(
+                attrs={'class': 'form-control', 'placeholder': 'Hodnocení produktu', 'min': 0, 'max': 100, 'value': 0}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Obsah recenze'})
         }
         labels = {
