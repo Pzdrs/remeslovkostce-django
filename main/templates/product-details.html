@@ -8,7 +8,10 @@
 {% endblock %}
 {% block body %}
     <div class="row mt-5">
-        <div class="col-lg-2"></div>
+        <div class="col-lg-2">
+            <a href="{{ product.category.get_absolute_url }}" class="btn btn-outline-info float-end">Zpět
+                na {{ product.category }}</a>
+        </div>
         <div class="col-lg-8">
             {% if not error_message %}
                 <h4>{{ product.name }}</h4>
@@ -17,7 +20,9 @@
                     {% if not error_message %}
                         <div class="row">
                             <div class="col-6">
-                                <img src="{{ product.image.url }}" alt="{{ product.slug }}" class="img-fluid">
+                                <a href="{{ product.image.url }}" target="_blank">
+                                    <img src="{{ product.image.url }}" alt="{{ product.slug }}" class="img-fluid">
+                                </a>
                             </div>
                             <div class="col-6">
                                 <h5>Popis produktu</h5>
@@ -28,24 +33,21 @@
                                     </div>
                                 {% endif %}
                                 <div class="mb-4">{{ product.description }}</div>
-                                <h5>Přidat recenzi</h5>
-                                <hr>
-                                <form method="post">
-                                    <div class="form-group">
-                                        {% csrf_token %}
-                                        {{ form.as_p }}
-                                        <input type="submit" class="btn btn-outline-primary" value="Odeslat">
-                                    </div>
-                                </form>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 mt-4">
-                                <h5>Recenze</h5>
+                                <div class="d-flex justify-content-between">
+                                    <h5>Recenze <span class="text-muted">({{ reviews.count }})</span></h5>
+                                    <a href="{% url 'main:product_details' product.category.slug product.slug %}review"
+                                       class="float-end btn btn-outline-primary">Přidat recenzi</a>
+                                </div>
                                 <hr>
                                 {% if not reviews %}
                                     <div class="alert alert-primary text-center" role="alert">
-                                        Nikdo dosud nezanechal recenzi k tomuto produktu, buďte první.
+                                        Nikdo dosud nezanechal recenzi k tomuto produktu, <a
+                                            href="{% url 'main:create_product_review' product.category.slug product.slug %}">buďte
+                                        první</a>.
                                     </div>
                                 {% endif %}
                                 {% for review in reviews %}
