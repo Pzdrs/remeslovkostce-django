@@ -20,7 +20,9 @@
                     {% if not error_message %}
                         <div class="row">
                             <div class="col-6">
-                                <img src="{{ product.image.url }}" alt="{{ product.slug }}" class="img-fluid">
+                                <a href="{{ product.image.url }}" target="_blank">
+                                    <img src="{{ product.image.url }}" alt="{{ product.slug }}" class="img-fluid">
+                                </a>
                             </div>
                             <div class="col-6">
                                 <h5>Popis produktu</h5>
