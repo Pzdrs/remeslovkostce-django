@@ -3,8 +3,8 @@
         <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.slug }}">
         <div class="card-body d-flex flex-column">
             <h4 class="card-title">{{ product.name }}</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            <a href="{{ product.get_absolute_url }}" class="btn btn-primary stretched-link align-self-start">Detail produktu</a>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="{{ product.get_absolute_url }}" class="btn btn-primary stretched-link align-self-start mt-auto">Detail produktu</a>
         </div>
     </div>
 </div>

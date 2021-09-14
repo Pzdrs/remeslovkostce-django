@@ -49,7 +49,7 @@ class CategoryProductsView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'product_details.html'
+    template_name = 'product-details.html'
     context_object_name = 'product'
     slug_url_kwarg = 'product_slug'
     extra_context = {'catalog': True}
@@ -61,7 +61,7 @@ class ProductDetailView(DetailView):
 
 
 class CreateProductReviewView(CreateView):
-    template_name = 'create_product_review.html'
+    template_name = 'create-product-review.html'
     form_class = ProductReviewForm
     extra_context = {'catalog': True}
 
