@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import *
 
@@ -46,68 +47,30 @@ class CategoryProductsView(ListView):
         return context
 
 
-class ProductDetailView(DetailView, BaseCreateView):
+class ProductDetailView(DetailView):
+    model = Product
     template_name = 'product_details.html'
     context_object_name = 'product'
     slug_url_kwarg = 'product_slug'
     extra_context = {'catalog': True}
-    form_class = ProductReviewForm
-
-    category = None
-    reviews = None
-    error_message = None
-
-    # TODO: toto jsem doplnil jako implicitni queryset
-    queryset = Product.objects.all()
-
-    def get_success_url(self):
-        print("get_success_url")
-        return self.get_object().get_absolute_url()
-
-    # TODO: protoze slug jednoznacne definuje produkt, nemusim se nijak zabyvat kategorii
-    #  a vlastne i produkt se nacte diky predanym kwargs parametrum implicitne do self.object
-    #  takze tato metoda nedela nic potrebneho ci logickeho navic muzeme ji tedy vypustit..
-    #  Ano je tam test platnosti slug parametru, ale to lze bezne klidne ignorovat. Pokud by
-    #  jste na tom trval pak bych dal ten test do get metody a v pripade chyby bych dal HTTPResponseRedirect
-    #  na chybovou hlasku...
-    def get_object(self, queryset=None):
-        print("get_object")
-
-        try:
-            self.category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
-            product = Product.objects.get(slug=self.kwargs[self.slug_url_kwarg])
-            self.reviews = ProductReview.objects.filter(product=product.pk)
-            return product
-        except Product.DoesNotExist:
-            self.error_message = 'Tento produkt neexistuje'
-        except ProductCategory.DoesNotExist:
-            self.error_message = 'Tato kategorie produktů neexistuje'
-
-    def get_initial(self):
-        print("get_initial")
-        # TODO: toto sem logicky nepatri, ale je na tom videt z printu na konzoli, ze jde prvni metodu kterou realne
-        #  volate Vy (ostatni jako get, post se volaji automaticky). Takze pokud bychom vymazali vasi implementaci
-        #  get_object a nechali zavolat implicitne definovanou porad vse bude normalne fungovat, protoze implicitne
-        #  DetailView zapise instanci z databaze do self.object - zde to delam rucne pro demonstracni ucely
-        #  NAVIC!!! - odpadne neustale volani get_object na ruznych mistech a tudiz neustale dotazy na databazi...
-        self.object = super(ProductDetailView, self).get_object(self.queryset)
-        initial = super().get_initial()
-        if self.get_object():
-            initial['product'] = self.get_object().pk
-        return initial
 
     def get_context_data(self, **kwargs):
-        print("get_context_data")
         context = super().get_context_data(**kwargs)
-        context['error_message'] = self.error_message
-        context['category'] = self.category
-        context['reviews'] = self.reviews
+        context['reviews'] = ProductReview.objects.filter(product_id=self.object.pk)
         return context
 
 
 class CreateProductReviewView(CreateView):
     template_name = 'create_product_review.html'
-    model = ProductReview
     form_class = ProductReviewForm
+    extra_context = {'catalog': True}
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product'] = Product.objects.get(slug=self.kwargs['product_slug'])
+        return context
 
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['product'] = Product.objects.get(slug=self.kwargs['product_slug']).pk
+        return initial

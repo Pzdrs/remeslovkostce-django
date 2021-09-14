@@ -28,24 +28,21 @@
                                     </div>
                                 {% endif %}
                                 <div class="mb-4">{{ product.description }}</div>
-                                <h5>Přidat recenzi</h5>
-                                <hr>
-                                <form method="post">
-                                    <div class="form-group">
-                                        {% csrf_token %}
-                                        {{ form.as_p }}
-                                        <input type="submit" class="btn btn-outline-primary" value="Odeslat">
-                                    </div>
-                                </form>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 mt-4">
-                                <h5>Recenze</h5>
+                                <div class="d-flex justify-content-between">
+                                    <h5>Recenze</h5>
+                                    <a href="{% url 'main:product_details' product.category.slug product.slug %}review"
+                                       class="float-end btn btn-outline-primary">Přidat recenzi</a>
+                                </div>
                                 <hr>
                                 {% if not reviews %}
                                     <div class="alert alert-primary text-center" role="alert">
-                                        Nikdo dosud nezanechal recenzi k tomuto produktu, buďte první.
+                                        Nikdo dosud nezanechal recenzi k tomuto produktu, <a
+                                            href="{% url 'main:create_product_review' product.category.slug product.slug %}">buďte
+                                        první</a>.
                                     </div>
                                 {% endif %}
                                 {% for review in reviews %}
