@@ -30,20 +30,13 @@ class CategoryProductsView(ListView):
     context_object_name = 'products'
     extra_context = {'catalog': True}
 
-    error_message = None
-    category = None
-
     def get_queryset(self):
-        try:
-            self.category = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
-            return Product.objects.filter(category_id=self.category.id)
-        except ProductCategory.DoesNotExist:
-            self.error_message = 'Tato kategorie produktů neexistuje'
+        return Product.objects.filter(category__slug=self.kwargs['category_slug'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['category'] = self.category
-        context['error_message'] = self.error_message
+        if self.object_list.count() >= 1:
+            context['category'] = self.object_list.first().category
         return context
 
 
