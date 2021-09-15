@@ -57,16 +57,21 @@ class CreateProductReviewView(CreateView):
     template_name = 'create-product-review.html'
     form_class = ProductReviewForm
     extra_context = {'catalog': True}
+    product = None
 
     # when i try to set self.product = Product.objects.get.... in getcontextdata method, the value
     # of self.product is None in get_initial() for some reason so i had to query the db twice here, idk
     # whats up with this thing
     def get_context_data(self, **kwargs):
+        print("get_context_data")
+        self.product = Product.objects.get(slug=self.kwargs['product_slug'])
         context = super().get_context_data(**kwargs)
         context['product'] = Product.objects.get(slug=self.kwargs['product_slug'])
         return context
 
     def get_initial(self):
+        print("get_initial")
+        print(self.product)
         initial = super().get_initial()
         initial['product'] = Product.objects.get(slug=self.kwargs['product_slug']).pk
         return initial
