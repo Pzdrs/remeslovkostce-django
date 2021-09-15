@@ -63,15 +63,14 @@ class CreateProductReviewView(CreateView):
     # of self.product is None in get_initial() for some reason so i had to query the db twice here, idk
     # whats up with this thing
     def get_context_data(self, **kwargs):
-        print("get_context_data")
         self.product = Product.objects.get(slug=self.kwargs['product_slug'])
         context = super().get_context_data(**kwargs)
         context['product'] = self.product
         return context
 
     def get_initial(self):
-        print("get_initial")
-        print(self.product)
+        if self.product is None:
+            self.product = Product.objects.get(slug=self.kwargs['product_slug'])
         initial = super().get_initial()
         initial['product'] = self.product.pk
         return initial
