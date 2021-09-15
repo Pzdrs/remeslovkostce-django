@@ -66,12 +66,12 @@ class CreateProductReviewView(CreateView):
         print("get_context_data")
         self.product = Product.objects.get(slug=self.kwargs['product_slug'])
         context = super().get_context_data(**kwargs)
-        context['product'] = Product.objects.get(slug=self.kwargs['product_slug'])
+        context['product'] = self.product
         return context
 
     def get_initial(self):
         print("get_initial")
         print(self.product)
         initial = super().get_initial()
-        initial['product'] = Product.objects.get(slug=self.kwargs['product_slug']).pk
+        initial['product'] = self.product.pk
         return initial
