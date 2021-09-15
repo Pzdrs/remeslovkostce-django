@@ -1,3 +1,4 @@
 .idea
 *.pyc
 remeslovkostce/secret_key.txt
+__pycache__/
