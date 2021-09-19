@@ -9,12 +9,19 @@
 {% block body %}
     <div class="row mt-5">
         <div class="col-lg-2">
-            <a href="{{ product.category.get_absolute_url }}" class="btn btn-outline-info float-end">Zpět
-                na {{ product.category }}</a>
+            <a href="{{ product.category.get_absolute_url }}" class="btn btn-outline-info float-end">
+                Zpět na {{ product.category }}
+            </a>
         </div>
         <div class="col-lg-8">
             {% if not error_message %}
-                <h4>{{ product.name }}</h4>
+                <div class="d-flex justify-content-between">
+                    <h4>{{ product }}</h4>
+                    <div>
+                        <a href="{% url 'main:update-product' product.category.slug product.slug %}"
+                           class="btn btn-warning">Upravit</a>
+                    </div>
+                </div>
                 <hr>
                 <div class="row mb-5">
                     {% if not error_message %}
@@ -39,14 +46,14 @@
                             <div class="col-12 mt-4">
                                 <div class="d-flex justify-content-between">
                                     <h5>Recenze <span class="text-muted">({{ reviews.count }})</span></h5>
-                                    <a href="{% url 'main:product-details' product.category.slug product.slug %}review"
+                                    <a href="{% url 'main:create-product-review' product.category.slug product.slug %}"
                                        class="float-end btn btn-outline-primary">Přidat recenzi</a>
                                 </div>
                                 <hr>
                                 {% if not reviews %}
                                     <div class="alert alert-primary text-center" role="alert">
                                         Nikdo dosud nezanechal recenzi k tomuto produktu, <a
-                                            href="{% url 'create-product-review' product.category.slug product.slug %}">buďte
+                                            href="{% url 'main:create-product-review' product.category.slug product.slug %}">buďte
                                         první</a>.
                                     </div>
                                 {% endif %}

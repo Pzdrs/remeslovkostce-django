@@ -1,7 +1,7 @@
 from django.views import generic
 
-from .models import ProductCategory, Product, ProductReview
-from .forms import ProductReviewForm
+from .models import *
+from . import forms
 
 
 # Create your views here.
@@ -50,13 +50,21 @@ class ProductDetail(generic.DetailView):
         context['reviews'] = ProductReview.objects.filter(product_id=self.object.pk)
         return context
 
+
 class ProductUpdate(generic.UpdateView):
-    pass
+    model = Product
+    form_class = forms.UpdateProductForm
+    template_name = 'update-product.html'
+    slug_url_kwarg = 'product_slug'
+
+    extra_context = {'catalog': True}
 
 
 class CreateProductReview(generic.CreateView):
+    model = ProductReview
+    form_class = forms.ProductReviewForm
     template_name = 'create-product-review.html'
-    form_class = ProductReviewForm
+
     extra_context = {'catalog': True}
 
     product = None

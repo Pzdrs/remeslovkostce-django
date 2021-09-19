@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import ProductReview
+from . import models
 
 
 class ProductReviewForm(forms.ModelForm):
     class Meta:
-        model = ProductReview
+        model = models.ProductReview
         fields = "__all__"
         widgets = {
             'product': forms.HiddenInput,
@@ -28,4 +28,21 @@ class ProductReviewForm(forms.ModelForm):
             'content': {
                 'required': 'Obsah recenze nesmí být prázdný'
             }
+        }
+
+
+class UpdateProductForm(forms.ModelForm):
+    class Meta:
+        model = models.Product
+        fields = ['category', 'name', 'description', 'image']
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'category': 'Kategorie',
+            'name': 'Název produktu',
+            'description': 'Popis produktu',
+            'image': 'Foto produktu'
         }

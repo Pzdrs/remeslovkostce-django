@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ product }}{% endblock %}
+{% block body %}
+    <div class="row mt-5">
+        <div class="col-lg-2">
+            <a href="{{ product.get_absolute_url }}" class="btn btn-outline-info float-end">Zpět na detail produktu</a>
+        </div>
+        <div class="col-lg-8">
+            <h4>Upravit produkt {{ product }}</h4>
+            <hr>
+            <form method="post">
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-outline-primary" value="Odeslat">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}
