@@ -1,6 +1,4 @@
-from django.urls import reverse
-from django.views.generic import TemplateView, ListView, DetailView
-from django.views.generic.edit import *
+from django.views import generic
 
 from .models import ProductCategory, Product, ProductReview
 from .forms import ProductReviewForm
@@ -8,24 +6,24 @@ from .forms import ProductReviewForm
 
 # Create your views here.
 
-class IndexView(TemplateView):
+class Index(generic.TemplateView):
     template_name = 'index.html'
     extra_context = {'index': True}
 
 
-class ContactView(TemplateView):
+class Contact(generic.TemplateView):
     template_name = 'contact.html'
     extra_context = {'contact': True}
 
 
-class CatalogListView(ListView):
+class Catalog(generic.ListView):
     model = ProductCategory
     template_name = 'catalog.html'
     context_object_name = 'categories'
     extra_context = {'catalog': True}
 
 
-class CategoryProductsView(ListView):
+class CategoryProducts(generic.ListView):
     template_name = 'category.html'
     context_object_name = 'products'
     extra_context = {'catalog': True}
@@ -40,7 +38,7 @@ class CategoryProductsView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetail(generic.DetailView):
     model = Product
     template_name = 'product-details.html'
     context_object_name = 'product'
@@ -52,16 +50,17 @@ class ProductDetailView(DetailView):
         context['reviews'] = ProductReview.objects.filter(product_id=self.object.pk)
         return context
 
+class ProductUpdate(generic.UpdateView):
+    pass
 
-class CreateProductReviewView(CreateView):
+
+class CreateProductReview(generic.CreateView):
     template_name = 'create-product-review.html'
     form_class = ProductReviewForm
     extra_context = {'catalog': True}
+
     product = None
 
-    # when i try to set self.product = Product.objects.get.... in getcontextdata method, the value
-    # of self.product is None in get_initial() for some reason so i had to query the db twice here, idk
-    # whats up with this thing
     def get_context_data(self, **kwargs):
         self.product = Product.objects.get(slug=self.kwargs['product_slug'])
         context = super().get_context_data(**kwargs)

@@ -5,12 +5,14 @@ from . import views
 app_name = 'main'
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    path('kontakt/', views.ContactView.as_view(), name='contact'),
-    path('katalog/', views.CatalogListView.as_view(), name='catalog'),
-    path('katalog/<slug:category_slug>/', views.CategoryProductsView.as_view(), name='category_details'),
-    path('katalog/<slug:category_slug>/<slug:product_slug>/', views.ProductDetailView.as_view(),
-         name='product_details'),
-    path('katalog/<slug:category_slug>/<slug:product_slug>/review/', views.CreateProductReviewView.as_view(),
-         name='create_product_review'),
+    path('', views.Index.as_view(), name='index'),
+    path('kontakt/', views.Contact.as_view(), name='contact'),
+    path('katalog/', views.Catalog.as_view(), name='catalog'),
+    path('katalog/<slug:category_slug>/', views.CategoryProducts.as_view(), name='category-details'),
+    path('katalog/<slug:category_slug>/<slug:product_slug>/', views.ProductDetail.as_view(),
+         name='product-details'),
+    path('katalog/<slug:category_slug>/<slug:product_slug>/review/', views.CreateProductReview.as_view(),
+         name='create-product-review'),
+    path('katalog/<slug:category_slug>/<slug:product_slug>/update/', views.ProductUpdate.as_view(),
+         name='update-product'),
 ]
