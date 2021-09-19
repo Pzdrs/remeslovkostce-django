@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Odstranit produkt{% endblock %}
+{% block body %}
+    <div class="row mt-5">
+        <div class="col-lg-2">
+            <a href="{{ product.get_absolute_url }}" class="btn btn-outline-info float-end">
+                Zpět na detail produktu
+            </a>
+        </div>
+        <div class="col-lg-8">
+            <h5>Opravdu chcete odstranit produkt {{ product }}?</h5>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <label for="slug-input">Pro potvrzení prosím napište <b>{{ product.slug }}</b>.</label>
+                <div class="input-group mt-2">
+                    <input id="slug-input" type="text" class="form-control" placeholder="Slug produktu">
+                    <div class="input-group-append">
+                        <input id="delete-button" type="submit" class="btn btn-danger" value="Odstranit" disabled>
+                    </div>
+                </div>
+            </form>
+            <script>
+                slug_input = document.getElementById('slug-input')
+                delete_button = document.getElementById('delete-button')
+                slug_input.addEventListener('input', () => delete_button.disabled = slug_input.value !== '{{ product.slug}}')
+            </script>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}

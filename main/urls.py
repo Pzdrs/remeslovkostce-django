@@ -13,6 +13,8 @@ urlpatterns = [
          name='product-details'),
     path('katalog/<slug:category_slug>/<slug:product_slug>/review/', views.CreateProductReview.as_view(),
          name='create-product-review'),
-    path('katalog/<slug:category_slug>/<slug:product_slug>/update/', views.ProductUpdate.as_view(),
+    path('katalog/<slug:category_slug>/<slug:product_slug>/update/', views.UpdateProduct.as_view(),
          name='update-product'),
+    path('katalog/<slug:category_slug>/<slug:product_slug>/delete/', views.DeleteProduct.as_view(),
+         name='delete-product'),
 ]

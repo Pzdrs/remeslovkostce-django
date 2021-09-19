@@ -34,10 +34,11 @@ class ProductReviewForm(forms.ModelForm):
 class UpdateProductForm(forms.ModelForm):
     class Meta:
         model = models.Product
-        fields = ['category', 'name', 'description', 'image']
+        fields = ['category', 'name', 'slug', 'description', 'image']
         widgets = {
-            'category': forms.Select(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-select'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {

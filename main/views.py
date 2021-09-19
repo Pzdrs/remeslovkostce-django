@@ -51,13 +51,22 @@ class ProductDetail(generic.DetailView):
         return context
 
 
-class ProductUpdate(generic.UpdateView):
+class UpdateProduct(generic.UpdateView):
     model = Product
     form_class = forms.UpdateProductForm
     template_name = 'update-product.html'
     slug_url_kwarg = 'product_slug'
 
     extra_context = {'catalog': True}
+
+
+class DeleteProduct(generic.DeleteView):
+    model = Product
+    template_name = 'delete-product.html'
+    slug_url_kwarg = 'product_slug'
+
+    def get_success_url(self):
+        return self.object.category.get_absolute_url()
 
 
 class CreateProductReview(generic.CreateView):
