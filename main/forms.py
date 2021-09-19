@@ -37,9 +37,9 @@ class UpdateProductForm(forms.ModelForm):
         fields = ['category', 'name', 'slug', 'description', 'image']
         widgets = {
             'category': forms.Select(attrs={'class': 'form-select'}),
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Název produktu'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug produktu'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Popis produktu'}),
         }
         labels = {
             'category': 'Kategorie',

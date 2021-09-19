@@ -65,6 +65,8 @@ class DeleteProduct(generic.DeleteView):
     template_name = 'delete-product.html'
     slug_url_kwarg = 'product_slug'
 
+    extra_context = {'catalog': True}
+
     def get_success_url(self):
         return self.object.category.get_absolute_url()
 

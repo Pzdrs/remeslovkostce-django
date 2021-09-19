@@ -8,6 +8,7 @@
         <div class="col-lg-8">
             <h4>Upravit produkt {{ product }}</h4>
             <hr>
+            {% comment %}Need to style the image selector input, also add the autofill for slug field depending on the product name field{% endcomment %}
             <form method="post">
                 <div class="form-group">
                     {% csrf_token %}
