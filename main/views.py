@@ -77,16 +77,6 @@ class CreateProduct(generic.CreateView):
         initial['category'] = self.category.pk
         return initial
 
-    def form_invalid(self, form):
-        """If the form is invalid, render the invalid form."""
-        print("Form invalid")
-        return super().form_invalid(form)
-
-    def form_valid(self, form):
-        """If the form is valid, redirect to the supplied URL."""
-        print("Form valid")
-        return super().form_valid(form)
-
 
 class UpdateProduct(generic.UpdateView):
     model = Product
@@ -119,7 +109,7 @@ class CreateProductReview(generic.CreateView):
 
     def load_data(self):
         if self.product is None:
-            self.product = Product.objects.get(slug=self.kwargs['product_slug'])
+            self.product = get_object_or_404(Product, slug=self.kwargs['product_slug'])
 
     def get_context_data(self, **kwargs):
         self.load_data()

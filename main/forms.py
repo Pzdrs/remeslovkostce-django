@@ -54,7 +54,7 @@ class CreateProductForm(forms.ModelForm):
         model = models.Product
         fields = ['category', 'name', 'slug', 'description', 'image']
         widgets = {
-            'category': forms.Select(attrs={'class': 'form-select', 'disabled': True}),
+            'category': forms.HiddenInput(),
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Název produktu'}),
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug produktu'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Popis produktu'}),
