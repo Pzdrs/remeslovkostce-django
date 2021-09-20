@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from .models import *
@@ -49,6 +50,29 @@ class ProductDetail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['reviews'] = ProductReview.objects.filter(product_id=self.object.pk)
         return context
+
+
+class CreateProduct(generic.CreateView):
+    model = Product
+    form_class = forms.CreateProductForm
+    template_name = 'create-product.html'
+
+    extra_context = {'catalog': True}
+
+    category = None
+
+    def get_context_data(self, **kwargs):
+        self.category = get_object_or_404(ProductCategory, slug=self.kwargs['category_slug'])
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
+
+    def get_initial(self):
+        if self.category is None:
+            self.category = get_object_or_404(ProductCategory, slug=self.kwargs['category_slug'])
+        initial = super().get_initial()
+        initial['category'] = self.category.pk
+        return initial
 
 
 class UpdateProduct(generic.UpdateView):

@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Upravit produkt{% endblock %}
+{% block title %}Přidat produkt{% endblock %}
 {% block body %}
     <div class="row my-5">
         <div class="col-lg-2">
-            <a href="{{ product.get_absolute_url }}" class="btn btn-outline-info float-end">Zpět na detail produktu</a>
+            <a href="{{ category.get_absolute_url }}" class="btn btn-outline-info float-end mb-2">Zpět na detail produktu</a>
         </div>
         <div class="col-lg-8">
-            <h4>Upravit produkt {{ product }}</h4>
+            <h4>Přidat produkt do kategorie {{ category }}</h4>
             <hr>
-            {% comment %}Need to style the image selector input, also add the autofill for slug field depending on the product name field{% endcomment %}
             <form method="post">
                 <div class="form-group">
                     {% csrf_token %}

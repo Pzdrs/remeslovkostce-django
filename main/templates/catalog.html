@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Katalog{% endblock %}
 {% block body %}
-    <div class="row mt-5">
+    <div class="row my-5">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
             <h4>Katalog</h4>
             <hr>
-            <div class="row mb-5">
+            <div class="row">
                 {% for category in categories %}
                     {% include 'partials/category-card.html' %}
                 {% endfor %}

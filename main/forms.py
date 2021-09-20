@@ -47,3 +47,21 @@ class UpdateProductForm(forms.ModelForm):
             'description': 'Popis produktu',
             'image': 'Foto produktu'
         }
+
+
+class CreateProductForm(forms.ModelForm):
+    class Meta:
+        model = models.Product
+        fields = ['category', 'name', 'slug', 'description', 'image']
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-select', 'disabled': True}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Název produktu'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug produktu'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Popis produktu'}),
+        }
+        labels = {
+            'category': 'Kategorie',
+            'name': 'Název produktu',
+            'description': 'Popis produktu',
+            'image': 'Foto produktu'
+        }
