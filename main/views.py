@@ -77,6 +77,16 @@ class CreateProduct(generic.CreateView):
         initial['category'] = self.category.pk
         return initial
 
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        print("Form invalid")
+        return super().form_invalid(form)
+
+    def form_valid(self, form):
+        """If the form is valid, redirect to the supplied URL."""
+        print("Form valid")
+        return super().form_valid(form)
+
 
 class UpdateProduct(generic.UpdateView):
     model = Product
