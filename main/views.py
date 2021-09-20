@@ -61,15 +61,18 @@ class CreateProduct(generic.CreateView):
 
     category = None
 
+    def load_data(self):
+        if self.category is None:
+            self.category = get_object_or_404(ProductCategory, slug=self.kwargs['category_slug'])
+
     def get_context_data(self, **kwargs):
-        self.category = get_object_or_404(ProductCategory, slug=self.kwargs['category_slug'])
+        self.load_data()
         context = super().get_context_data(**kwargs)
         context['category'] = self.category
         return context
 
     def get_initial(self):
-        if self.category is None:
-            self.category = get_object_or_404(ProductCategory, slug=self.kwargs['category_slug'])
+        self.load_data()
         initial = super().get_initial()
         initial['category'] = self.category.pk
         return initial
@@ -104,15 +107,18 @@ class CreateProductReview(generic.CreateView):
 
     product = None
 
+    def load_data(self):
+        if self.product is None:
+            self.product = Product.objects.get(slug=self.kwargs['product_slug'])
+
     def get_context_data(self, **kwargs):
-        self.product = Product.objects.get(slug=self.kwargs['product_slug'])
+        self.load_data()
         context = super().get_context_data(**kwargs)
         context['product'] = self.product
         return context
 
     def get_initial(self):
-        if self.product is None:
-            self.product = Product.objects.get(slug=self.kwargs['product_slug'])
+        self.load_data()
         initial = super().get_initial()
         initial['product'] = self.product.pk
         return initial
