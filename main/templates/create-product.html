@@ -3,18 +3,28 @@
 {% block body %}
     <div class="row my-5">
         <div class="col-lg-2">
-            <a href="{{ category.get_absolute_url }}" class="btn btn-outline-info float-end mb-2">Zpět na detail produktu</a>
+            {% if not error_message %}
+                <a href="{{ category.get_absolute_url }}" class="btn btn-outline-info float-end mb-2">
+                    Zpět na detail produktu
+                </a>
+            {% endif %}
         </div>
         <div class="col-lg-8">
-            <h4>Přidat produkt do kategorie {{ category }}</h4>
-            <hr>
-            <form method="post">
-                <div class="form-group">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" class="btn btn-outline-primary" value="Odeslat">
+            {% if not error_message %}
+                <h4>Přidat produkt do kategorie {{ category }}</h4>
+                <hr>
+                <form method="post">
+                    <div class="form-group">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn btn-outline-primary" value="Odeslat">
+                    </div>
+                </form>
+            {% else %}
+                <div class="alert alert-danger text-center mt-3" role="alert">
+                    {{ error_message }}
                 </div>
-            </form>
+            {% endif %}
         </div>
         <div class="col-lg-2"></div>
     </div>

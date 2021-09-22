@@ -61,22 +61,22 @@ class CreateProduct(generic.CreateView):
 
     extra_context = {'catalog': True}
 
-    category = None
-
-    def load_data(self):
-        if self.category is None:
-            self.category = get_object_or_404(ProductCategory, slug=self.kwargs['category_slug'])
-
     def get_context_data(self, **kwargs):
-        self.load_data()
         context = super().get_context_data(**kwargs)
-        context['category'] = self.category
+
+        try:
+            context['category'] = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
+        except ProductCategory.DoesNotExist:
+            context['error_message'] = 'Tato kategorie produktů neexistuje'
         return context
 
     def get_initial(self):
-        self.load_data()
         initial = super().get_initial()
-        initial['category'] = self.category.pk
+
+        try:
+            initial['category'] = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
+        except ProductCategory.DoesNotExist:
+            pass
         return initial
 
 
