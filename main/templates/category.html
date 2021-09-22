@@ -14,21 +14,30 @@
             </a>
         </div>
         <div class="col-lg-8">
-            <div class="d-flex justify-content-between">
-                <h4>{{ category }}</h4>
-                <a href="{% url 'main:create-product' category.slug %}" class="btn btn-success">Přidat produkt</a>
-            </div>
-            <hr>
-            <div class="row">
+
+            {% if error_message %}
+                <div class="alert alert-danger text-center mt-5" role="alert">
+                    {{ error_message }}
+                </div>
+            {% else %}
+                <div class="d-flex justify-content-between">
+                    <h4>{{ category }}</h4>
+                    <a href="{% url 'main:create-product' category.slug %}" class="btn btn-success">
+                        Přidat produkt
+                    </a>
+                </div>
+                <hr>
                 {% if products.count == 0 %}
                     <div class="alert alert-warning text-center" role="alert">
                         Tato kategoriie neobsahuje žádné produkty
                     </div>
                 {% endif %}
-                {% for product in products %}
-                    {% include 'partials/product-card.html' %}
-                {% endfor %}
-            </div>
+                <div class="row">
+                    {% for product in products %}
+                        {% include 'partials/product-card.html' %}
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
         <div class="col-lg-2"></div>
     </div>
