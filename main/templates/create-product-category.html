@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Přidat kategorii{% endblock %}
+{% block body %}
+    <div class="row my-5">
+        <div class="col-lg-2">
+            <a href="{% url 'main:catalog' %}" class="btn btn-outline-info float-end mb-2">
+                Zpět na Katalog
+            </a>
+        </div>
+        <div class="col-lg-8">
+            <h4>Přidat novou kategorii</h4>
+            <hr>
+            <form method="post">
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-outline-primary" value="Odeslat">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}

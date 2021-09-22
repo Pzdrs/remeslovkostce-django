@@ -34,8 +34,10 @@ class CategoryProducts(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.object_list.count() >= 1:
-            context['category'] = self.object_list.first().category
+        try:
+            context['category'] = ProductCategory.objects.get(slug=self.kwargs['category_slug'])
+        except ProductCategory.DoesNotExist:
+            context['error_message'] = 'Tato kategorie produktů neexistuje'
         return context
 
 
@@ -96,6 +98,14 @@ class DeleteProduct(generic.DeleteView):
 
     def get_success_url(self):
         return self.object.category.get_absolute_url()
+
+
+class CreateProductCategory(generic.CreateView):
+    model = ProductCategory
+    form_class = forms.CreateProductCategoryForm
+    template_name = 'create-product-category.html'
+
+    extra_context = {'catalog': True}
 
 
 class CreateProductReview(generic.CreateView):

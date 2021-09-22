@@ -65,3 +65,19 @@ class CreateProductForm(forms.ModelForm):
             'description': 'Popis produktu',
             'image': 'Foto produktu'
         }
+
+
+class CreateProductCategoryForm(forms.ModelForm):
+    class Meta:
+        model = models.ProductCategory
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'name': 'Jméno kategorie',
+            'description': 'Popis kategorie',
+            'thumbnail': 'Náhledový obrázek'
+        }
