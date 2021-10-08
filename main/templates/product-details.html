@@ -17,12 +17,14 @@
             {% if not error_message %}
                 <div class="d-flex justify-content-between">
                     <h4>{{ product }}</h4>
-                    <div>
-                        <a href="{% url 'main:update-product' product.category.slug product.slug %}"
-                           class="btn btn-warning">Upravit</a>
-                         <a href="{% url 'main:delete-product' product.category.slug product.slug %}"
-                           class="btn btn-danger">Odstranit</a>
-                    </div>
+                    {% if user.is_authenticated %}
+                        <div>
+                            <a href="{% url 'main:update-product' product.category.slug product.slug %}"
+                               class="btn btn-warning">Upravit</a>
+                            <a href="{% url 'main:delete-product' product.category.slug product.slug %}"
+                               class="btn btn-danger">Odstranit</a>
+                        </div>
+                    {% endif %}
                 </div>
                 <hr>
                 <div class="row">

@@ -6,7 +6,9 @@
         <div class="col-lg-8">
             <div class="d-flex justify-content-between">
                 <h4>Katalog</h4>
-                <a href="{% url 'main:create-category' %}" class="btn btn-success">Přidat kategorii</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'main:create-category' %}" class="btn btn-success">Přidat kategorii</a>
+                {% endif %}
             </div>
             <hr>
             <div class="row">

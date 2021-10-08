@@ -21,9 +21,11 @@
             {% else %}
                 <div class="d-flex justify-content-between">
                     <h4>{{ category }}</h4>
-                    <a href="{% url 'main:create-product' category.slug %}" class="btn btn-success">
-                        Přidat produkt
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'main:create-product' category.slug %}" class="btn btn-success">
+                            Přidat produkt
+                        </a>
+                    {% endif %}
                 </div>
                 <hr>
                 {% if products.count == 0 %}
