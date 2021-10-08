@@ -10,3 +10,5 @@ def description(product, max_length):
         return mark_safe(f'{product.description[:max_length]}...<a href="{product.get_absolute_url()}">číst dále</a>')
     else:
         return product.description
+
+
